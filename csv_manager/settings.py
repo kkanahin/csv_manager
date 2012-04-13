@@ -50,7 +50,7 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/media/"
 import os
 PROJECT_PATH = os.path.realpath(os.path.dirname('__file__'))
-print PROJECT_PATH
+
 MEDIA_ROOT = os.path.join(PROJECT_PATH,'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -168,6 +168,7 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS =False
 DEFAULT_FROM_EMAIL='admin@csv-manager.com'
+LOGIN_REDIRECT_URL = '/'
 # End Django-register configuration block
 try:
     from local_settings import *
