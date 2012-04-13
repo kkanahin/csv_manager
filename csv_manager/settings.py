@@ -49,8 +49,8 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 import os
-PROJECT_PATH = os.path.realpath(os.path.pardir)
-
+PROJECT_PATH = os.path.realpath(os.path.dirname('__file__'))
+print PROJECT_PATH
 MEDIA_ROOT = os.path.join(PROJECT_PATH,'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -70,6 +70,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH,'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
