@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Регистрация</h1>
-<form method="post" action="">
+<form method="post" action="">{% csrf_token %}
 <dl class="register">
 {% for field in form %}
     <dt>{{ field.label_tag }}</dt>
@@ -11,6 +11,8 @@
     </dd>
 {% endfor %}
 </dl>
-<input type="submit" value="Зарегистрироваться" / class="clearfix">
+<input type="submit" class="btn" value="Зарегистрироваться">
 </form>
+{% endblock %}
+{% block footer %}
 {% endblock %}
