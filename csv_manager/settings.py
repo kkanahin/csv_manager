@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'csv_manger_db',                      # Or path to database file if using sqlite3.
+        'NAME': 'csv_manger.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -109,6 +109,7 @@ ROOT_URLCONF = 'csv_manager.urls'
 WSGI_APPLICATION = 'csv_manager.wsgi.application'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_PATH,'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -157,8 +158,16 @@ LOGGING = {
         },
     }
 }
-
+# Django-register configuration block
 ACCOUNT_ACTIVATION_DAYS = 2
+AUTH_USER_EMAIL_UNIQUE = True
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS =False
+DEFAULT_FROM_EMAIL='admin@csv-manager.com'
+# End Django-register configuration block
 try:
     from local_settings import *
 except ImportError:
