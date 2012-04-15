@@ -26,18 +26,8 @@ class RegistrationVersionInfoTests(TestCase):
         
         """
         versions = [
-            {'version': (1, 0, 0, 'alpha', 0),
-             'expected': "1.0 pre-alpha"},
-            {'version': (1, 0, 1, 'alpha', 1),
-             'expected': "1.0.1 alpha 1"},
-            {'version': (1, 1, 0, 'beta', 2),
-             'expected': "1.1 beta 2"},
-            {'version': (1, 2, 1, 'rc', 3),
-             'expected': "1.2.1 rc 3"},
-            {'version': (1, 3, 0, 'final', 0),
-             'expected': "1.3"},
-            {'version': (1, 4, 1, 'beta', 0),
-             'expected': "1.4.1 beta"},
+            {'version': (0, 8, 0, 'final', 0),
+             'expected': "0.8"},
             ]
         
         for version_dict in versions:
