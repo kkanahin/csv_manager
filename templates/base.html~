@@ -15,18 +15,33 @@
 {% load i18n %}
 
 <body>
+
 <div class="container">
+         {% block header %}
             <div class="navbar">
                 <div class="navbar-inner">
                     <div class="container">
                         <a class="brand" href="#">
                             CSV-manager
                         </a>
+                        <ul class="nav">
+                            <li>
+                               <a href="">Главная</a>
+                            </li>
+                            <li>
+                               <a href="">Загрузка файлов</a>
+                            </li>
+                            <li>
+                              <a href="{% url auth_logout %}">Выход</a>
+                            </li>
+                       </ul>
                     </div>
                 </div>
             <div>
+         {% endblock %}
             {% block content %}
             {% endblock %}
+</div>
 {% block footer %}<footer>© Kanakhin 2012</footer>{% endblock %}
 </div>
 </body>
