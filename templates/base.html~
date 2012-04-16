@@ -29,11 +29,13 @@
                                <a href="">Главная</a>
                             </li>
                             <li>
-                               <a href="">Загрузка файлов</a>
+                               <a href="{% url %}/upload">Загрузка файлов</a>
                             </li>
-                            <li>
-                              <a href="{% url auth_logout %}">Выход</a>
-                            </li>
+                       </ul>
+                       <ul class="nav pull-right">
+                       <li>
+                          <a href="{% url auth_logout %}">Выход</a>
+                       </li>
                        </ul>
                     </div>
                 </div>
