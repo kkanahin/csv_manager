@@ -1,4 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-Ваш файл был загружен и обработан!
-{% endblock %}
