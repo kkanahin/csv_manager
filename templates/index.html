@@ -1,24 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-<div class="navbar offset4 span4.5">
-  <div class="navbar-inner">
-  <div class="container">
-  <ul class="nav nav-pills">
-     <li>
-        <a href="">Главная</a>
-     </li>
-     <li>
-        <a href="">Загрузка файлов</a>
-     </li>
-     <li>
-        <a href="{% url auth_logout %}">Выход</a>
-     </li>
-  </ul>
-</div>
-</div>
-</div>
-</div>
 <div class="hero-unit">
 <h2>
   Уважаемый, {{ user.username }}, страница находится в разработке!!!
