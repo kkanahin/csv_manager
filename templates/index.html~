@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="hero-unit">
-<h2>
-  Уважаемый, {{ user.username }}, страница находится в разработке!!!
-</h2>
-</div>
-{% endblock %}
