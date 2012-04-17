@@ -17,11 +17,18 @@ class Func_varAdmin(admin.ModelAdmin):
 
 class FunctionAdmin(admin.ModelAdmin):
     list_display=('id','variable','function','variable_id','variable_data')
+    list_filter=['variable__data','variable__id']
 #    fieldsets=[
 #        (None,{'fields':['variable']}),
 #        ('Function value',{'fields':['function']}),
 #    ]
-
+    def variable_id(self,obj):
+        return obj.variable.id
+    variable_id.short_description="variable id"
+    
+    def variable_data(self,obj):
+        return obj.variable.data
+    variable_data.short_description="variable data"
 
 
 admin.site.register(Category)

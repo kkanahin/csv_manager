@@ -6,9 +6,11 @@ class Category(models.Model):
     def __unicode__(self):
         return self.name_category
     
-    
+def make_upload_file(instance,filename):
+    return u"%s" % (filename)
+
 class CSVData(models.Model):
-    name_file=models.CharField(max_length=30)
+    name_file=models.FileField(upload_to=make_upload_file)
     upload_date=models.DateTimeField(auto_now_add=True)
     category=models.ForeignKey(Category)
     
@@ -28,11 +30,11 @@ class Function(models.Model):
     variable=models.ForeignKey(Func_var)
     function=models.FloatField()
     
-    def variable_id(self):
-        return self.variable.id
+#    def variable_id(self):
+#        return self.variable.id
     
-    def variable_data(self):
-        return self.variable.data
+#    def variable_data(self):
+#        return self.variable.data
 
     def __unicode__(self):
         return str(self.function)
