@@ -15,7 +15,7 @@ class CSVData(models.Model):
     category=models.ForeignKey(Category)
     
     def __unicode__(self):
-        return self.name_file
+        return str(self.name_file)
 
 
 class Func_var(models.Model):
