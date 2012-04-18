@@ -23,4 +23,4 @@ def file_upload(request):
     return render_to_response('upload.html',{'form':form},context_instance=RequestContext(request))
 
 def view_file(request):
-    return render_to_response('upload_success.html')
+    return render_to_response('file_view.html')
