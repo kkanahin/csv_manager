@@ -15,12 +15,12 @@ def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            handle_uploaded_file(request.FILES['upload_file'],\
+            added_file=handle_uploaded_file(request.FILES['upload_file'],\
                 request.POST['category'])
-            return HttpResponseRedirect('/view_file/')
+            return HttpResponseRedirect('/view_file/%s/' % added_file)
     else:
         form = UploadFileForm()
     return render_to_response('upload.html',{'form':form},context_instance=RequestContext(request))
 
-def view_file(request):
+def view_file(request,file_id):
     return render_to_response('file_view.html')

@@ -15,3 +15,4 @@ def handle_uploaded_file(csv_file,category):
                             )
         for variable_value in value_splited[1:]:
             func_variable_value.function_set.create(function=variable_value)
+    return upload_file.id
