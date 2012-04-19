@@ -17,5 +17,5 @@ urlpatterns = patterns('',
     url(r'^accounts/',include('registration.backends.default.urls')),
     url(r'^$','files_manager.views.file_list'),
     url(r'^upload/$','files_manager.views.file_upload'),
-    url(r'^view_file/$','files_manager.views.view_file'),
+    url(r'^view_file/(\d+)/$','files_manager.views.view_file'),
 )
