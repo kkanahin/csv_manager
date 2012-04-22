@@ -3,24 +3,21 @@
 <table class=" table table-striped table-bordered">
      <thead>
         <tr>
-       {% for head_column in column %}
+       {% for number_head_column in column %}
            {% if forloop.first %} 
               <th>X</th><th>F{{ head_column }}(X)</th>
            {% else %}
-              <th>F{{ head_column }}(X)</th>
+              <th>F{{ number_head_column }}(X)</th>
            {% endif %}
        {% endfor %}
         <tr>
      </thead>
      <tbody>
-     {% for key,value in table_value.items %}
+     {% for column_values in table_value.values %}
        <tr>
+       {% for value in column_values %}
        <td>
-       {{ key }}
-       </td>
-       {% for function_value in value %}
-       <td>
-       {{ function_value }}
+       {{ value }}
        </td>
        {% endfor %}
        </tr>
