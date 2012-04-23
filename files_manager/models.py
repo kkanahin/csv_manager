@@ -12,6 +12,7 @@ def make_upload_file(instance,filename):
 class CSVData(models.Model):
     name_file=models.FileField(upload_to=make_upload_file)
     upload_date=models.DateTimeField(auto_now_add=True)
+    last_change=models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category)
     
     def __unicode__(self):
