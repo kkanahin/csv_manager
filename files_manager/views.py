@@ -3,11 +3,11 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from files_manager.forms import UploadFileForm
 from django.http import HttpResponseRedirect,Http404
-from files_manager.models import Func_var,Function
+from files_manager.models import Func_var,Function,CSVData
 from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
+from django.contrib import messages
 
-@login_required
 def file_list(request):
     return render_to_response('index.html',{'user':request.user})
 
@@ -18,7 +18,8 @@ def file_upload(request):
         if form.is_valid():
             added_file=handle_uploaded_file(request.FILES['upload_file'],\
                 request.POST['category'])
-            return HttpResponseRedirect('/view_file/%s/' % added_file)
+            messages.success(request,'File was uploaded succesfully ')
+            return HttpResponseRedirect('/file_view/%s/' % added_file)
     else:
         form = UploadFileForm()
     return render_to_response('upload.html',{'form':form},\
@@ -26,11 +27,14 @@ def file_upload(request):
 
 def file_view(request,file_id):
     template_variables={}
+    
     template_variables['table_value']={}
     query_result=Function.objects.filter(variable__data=file_id).\
         values('variable','variable__variable','function').order_by('variable')
     if not query_result:
         raise Http404
+    template_variables['file_name']=CSVData.objects.values('name_file').\
+                                    get(id=file_id)['name_file']
     for fetch_raws in query_result:
        if not fetch_raws['variable'] in template_variables['table_value'].keys():
            template_variables['table_value'][fetch_raws['variable']]=[]
