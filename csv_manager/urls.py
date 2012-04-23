@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/',include('registration.backends.default.urls')),
-    url(r'^$','files_manager.views.file_list'),
-    url(r'^upload/$','files_manager.views.file_upload'),
-    url(r'^file_view/(\d+)/$','files_manager.views.file_view'),
+    url(r'^$','files_manager.views.file_list',name="file_list"),
+    url(r'^upload/$','files_manager.views.file_upload',name="file_upload"),
+    url(r'^file_view/(\d+)/$','files_manager.views.file_view',name="file_view"),
 )

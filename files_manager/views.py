@@ -7,6 +7,7 @@ from files_manager.models import Func_var,Function,CSVData
 from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 def file_list(request):
     return render_to_response('index.html',{'user':request.user})
@@ -19,7 +20,7 @@ def file_upload(request):
             added_file=handle_uploaded_file(request.FILES['upload_file'],\
                 request.POST['category'])
             messages.success(request,'File was uploaded succesfully ')
-            return HttpResponseRedirect('/file_view/%s/' % added_file)
+            return HttpResponseRedirect(reverse('file_view',args=[added_file]))
     else:
         form = UploadFileForm()
     return render_to_response('upload.html',{'form':form},\
