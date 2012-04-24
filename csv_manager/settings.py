@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'files_manager',
     'registration',
+    'files_manager.templatetags',
 )
 
 # A sample logging configuration. The only tangible logging

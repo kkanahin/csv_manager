@@ -27,23 +27,32 @@ def file_upload(request):
            context_instance=RequestContext(request))
 
 def file_view(request,file_id):
-    template_variables={}
-    
-    template_variables['table_value']={}
+#    template_variables={}
+#    
+#    template_variables['table_value']={}
+#    query_result=Function.objects.filter(variable__data=file_id).\
+#        values('variable','variable__variable','function').order_by('variable')
+#    if not query_result:
+#        raise Http404
+#    template_variables['file_name']=CSVData.objects.values('name_file').\
+#                                    get(id=file_id)['name_file']
+#    for fetch_raws in query_result:
+#       if not fetch_raws['variable'] in template_variables['table_value'].keys():
+#           template_variables['table_value'][fetch_raws['variable']]=[]
+#           template_variables['table_value'][fetch_raws['variable']].\
+#               append(fetch_raws['variable__variable'])
+#       template_variables['table_value'][fetch_raws['variable']].\
+#           append(fetch_raws['function'])
+#    template_variables['column']=range(1,max([len(val)\
+#        for val in template_variables['table_value'].values()]))
+#    return render_to_response('file_view.html',template_variables,\
+#           context_instance=RequestContext(request))
+    try:
+        file_name=CSVData.objects.values('name_file').get(id=file_id)['name_file']
+    except CSVData.DoesNotExist:
+        raise Http404
     query_result=Function.objects.filter(variable__data=file_id).\
         values('variable','variable__variable','function').order_by('variable')
-    if not query_result:
-        raise Http404
-    template_variables['file_name']=CSVData.objects.values('name_file').\
-                                    get(id=file_id)['name_file']
-    for fetch_raws in query_result:
-       if not fetch_raws['variable'] in template_variables['table_value'].keys():
-           template_variables['table_value'][fetch_raws['variable']]=[]
-           template_variables['table_value'][fetch_raws['variable']].\
-               append(fetch_raws['variable__variable'])
-       template_variables['table_value'][fetch_raws['variable']].\
-           append(fetch_raws['function'])
-    template_variables['column']=range(1,max([len(val)\
-        for val in template_variables['table_value'].values()]))
+    template_variables={'file_name': file_name, 'table_value': query_result}
     return render_to_response('file_view.html',template_variables,\
-           context_instance=RequestContext(request))
+           context_instance=RequestContext(request))     
