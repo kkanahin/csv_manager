@@ -1,0 +1,23 @@
+<table class=" table table-striped table-bordered table-text">
+     <caption>
+       <b>
+       File: {{ table_caption }}
+       </b>
+     </caption>
+     <thead >
+        <tr>
+       {% for number_head_column in columns_number %}
+           {% if forloop.first %} 
+              <th>X</th><th>F{{ head_column }}(X)</th>
+           {% else %}
+              <th>F{{ number_head_column }}(X)</th>
+           {% endif %}
+       {% endfor %}
+        <tr>
+     </thead>
+     <tbody>
+       {% for table_body_raw in table_raws %}
+           {{ table_body_raw }} 
+       {% endfor %}
+     </tbody>
+</table>
