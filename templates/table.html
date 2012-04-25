@@ -16,8 +16,12 @@
         <tr>
      </thead>
      <tbody>
-       {% for table_body_raw in table_raws %}
-           {{ table_body_raw }} 
+       {% for raw in table_raws %}
+           <tr>
+           {% for cell in raw %}
+              <td>{{ cell }}</td>
+           {% endfor %}
+           </tr> 
        {% endfor %}
      </tbody>
 </table>

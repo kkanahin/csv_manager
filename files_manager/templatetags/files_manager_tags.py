@@ -9,12 +9,13 @@ def show_table(values_list,table_caption):
     for values_raw in values_list:
             if not values_raw['variable'] in table_value.keys():
                 table_value[values_raw['variable']]=[]
-                table_value[values_raw['variable']].append(values_raw['variable__variable'])
+                table_value[values_raw['variable']].\
+                    append(values_raw['variable__variable'])
             table_value[values_raw['variable']].append(values_raw['function'])
-    table_raws=[mark_safe('<tr>%s</tr>' % (''.join(["<td>%s</td>" % cell_value for cell_value in raw])))\
-                for raw in table_value.values()]
     columns_number = range(1,max([len(val) for val in table_value.values()]))
-    return {'table_raws': table_raws,'columns_number': columns_number,\
+    for raw in table_value.values():
+        raw.extend(['']*(len(columns_number)-len(raw)+1))
+    return {'table_raws': table_value.values(),'columns_number': columns_number,\
             'table_caption':table_caption}
 
 

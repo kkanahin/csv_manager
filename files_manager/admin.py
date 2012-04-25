@@ -2,7 +2,7 @@ from django.contrib import admin
 from files_manager.models import Category,CSVData,Func_var,Function
 
 class CSVDataAdmin(admin.ModelAdmin):
-    list_display=('id','name_file','upload_date','category')
+    list_display=('id','name_file','upload_date','last_change','category')
 
 class FunctionInline(admin.StackedInline):
     model=Function
