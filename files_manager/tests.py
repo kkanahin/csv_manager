@@ -5,7 +5,7 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
-from django.test import TestCase
+from django.test import TestCase,Client
 
 
 class SimpleTest(TestCase):
@@ -14,3 +14,12 @@ class SimpleTest(TestCase):
         Tests that 1 + 1 always equals 2.
         """
         self.assertEqual(1 + 1, 2)
+
+class MyTest(TestCase):
+    def test_default_page(self):
+        c=Client()
+        response=c.get('/')
+        self.assertEqual(response.status_code,200)
+        c.login(username='admin',password='02111985')
+        response=c.get('/upload/')
+        self.assertEqual(response.status_code,302)
