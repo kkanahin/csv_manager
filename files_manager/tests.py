@@ -6,19 +6,23 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase,Client
+from django.contrib.auth.models import User
 
 class Files_managerTest(TestCase):
     fixtures=['test_data.json']
     
+    def setUp(self):
+        User.objects.create_user('test_user','test_user@example.com','pass')
+
     def test_default_page(self):
         c=Client()
         response=c.get('/')
         self.assertEqual(response.status_code,200)
-        
+
     def test_upload_page(self):
         c=Client()
         response=c.get('/upload/')
         self.assertRedirects(response,'accounts/login/?next=/upload/')
-        c.login(username='test_admin',password='admin')
+        c.login(username='test_user',password='pass')
         response=c.get('/upload/')
         self.assertEqual(response.status_code,200)
