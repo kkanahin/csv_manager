@@ -9,6 +9,7 @@ from django.test import TestCase,Client
 from django.contrib.auth.models import User
 from files_manager import forms
 from django.core.files import File
+from django.core.urlresolvers import reverse
 import os
 
 class Files_managerTest(TestCase):
@@ -45,4 +46,4 @@ class Files_managerTest(TestCase):
         upload_file_path=(os.path.join(self.test_files_path,'2.csv_test'))
         upload_file=open(upload_file_path,'rb')
         response=c.post('/upload/',{'category':'1','upload_file':upload_file})
-        self.assertRedirects(response,'file_view/')
+        self.assertRedirects(response,reverse('file_view',args=[2]))
