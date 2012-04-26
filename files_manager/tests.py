@@ -35,14 +35,15 @@ class Files_managerTest(TestCase):
     def test_upload_file(self):
         c=Client()
         c.login(username='test_user',password='pass')
-        upload_file_path=(os.path.join(self.test_files_path,'1.csv'))
+        upload_file_path=(os.path.join(self.test_files_path,'1.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
+        response=c.post('/upload/',{'category':1,'upload_file':upload_file})
         self.failIf(response.context['form'].is_valid())
         self.assertFormError(response,'form',field='upload_file',\
                              errors=u'This file is not csv!')
         upload_file.close()
-        upload_file_path=(os.path.join(self.test_files_path,'2.csv'))
+        upload_file_path=(os.path.join(self.test_files_path,'2.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
+        response=c.post('/upload/',{'category':1,'upload_file':upload_file})
+        print response.content
         self.assertRedirects(response,'file_view/')
