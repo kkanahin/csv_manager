@@ -9,7 +9,7 @@ def handle_uploaded_file(csv_file,category):
                 name_file=csv_file,
                 )
     for line in csv_file:
-        value_splited=re.split(',|;',line)
+        value_splited=re.split(',|;',line.replace(',,',',0,'))
         func_variable_value=upload_file.func_var_set.create(
                             variable=value_splited[0],
                             )

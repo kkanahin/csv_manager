@@ -9,7 +9,7 @@ class UploadFileForm(forms.Form):
     
     def clean_upload_file(self):
         data=self.cleaned_data['upload_file']
-        check=re.compile('(\d+(\.|\;)?(\d+)?(,|;))+\d+\.?(\d+)?\n')
+        check=re.compile('((\d+(\.|\;)?(\d+)?)?(,|;))+\d+\.?(\d+)?(\n|\r\n)')
         for line in data:
             if not check.match(line):
                 raise forms.ValidationError("This file is not csv!")
