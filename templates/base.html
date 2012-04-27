@@ -9,6 +9,8 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="{% static "bootstrap/js/bootstrap.js"%}"></script>
 {% endblock%}
+{% block extrascript %}
+{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
 </head>
@@ -34,7 +36,22 @@
                        </ul>
                        <ul class="nav pull-right">
                        <li>
-                          <a href="{% url auth_logout %}">Выход</a>
+                          {% if user.is_authenticated %}
+                          <div class="btn-group pull-right">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                   <i class="icon-user"></i>
+                                   {{ user.username }}
+                                   <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                               <li>
+                                   <a href="{% url auth_logout %}" >Выйти</a>
+                               </li>
+                            </ul>
+                          </div
+                          {% else %}
+                          <a href="{% url auth_login %}">Вход</a>
+                          {% endif %}
                        </li>
                        </ul>
                     </div>

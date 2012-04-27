@@ -3,14 +3,22 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from files_manager.forms import UploadFileForm
 from django.http import HttpResponseRedirect,Http404
-from files_manager.models import Func_var,Function,CSVData
+from files_manager.models import Func_var,Function,CSVData,Category
 from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 def file_list(request):
-    return render_to_response('index.html',{'user':request.user})
+    categories_list=Category.objects.all().values('id','name_category')
+    choiced_category=request.GET.get('category')
+    files_list=CSVData.objects.filter(category=choiced_category).\
+               values('id','name_file','upload_date')
+    return render_to_response('index.html',{'user':request.user,\
+                            'categories_list':categories_list,\
+                            'files_list': files_list},\
+                            context_instance=RequestContext(request)
+                                             )
 
 @login_required
 def file_upload(request):

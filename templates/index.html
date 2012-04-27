@@ -1,8 +1,62 @@
 {% extends "base.html" %}
+{% block extrastyle %}
+<style>
+.block_height{
+    height: 500px;
+}
+.sidebar-nav{
+    margin-top: 10px;
+    height: 400px;
+    overflow: auto;
+}
+.file-content-bar{
+    margin-top: 10px;
+    height: 400px;
+}
+.hero-unit{
+height: 300px;
+}
+
+
+
+</style>
+{% endblock %}
+{% block extrascript %}
+  <script>
+  function reset_btn_category(){
+  $('.category').button('reset');
+  }
+  </script>
+{% endblock %}
 {% block content %}
-<div class="hero-unit">
-<h2>
-  Уважаемый, {{ user.username }}, страница находится в разработке!!!
-</h2>
+<div class="container-fluid block_height">
+  <div class="row-fluid">
+    <div class="span2">
+       <div class="well sidebar-nav">
+           <label>Список категорий:</label>
+          {% for category in categories_list %}
+				<a href="/?category={{ category.id }}">{{ category.name_category }}</a><br>
+          {% endfor %}			
+       </div>
+     
+    </div>
+    <div class="span10 file-content-bar">
+      <table class="table table-striped" >
+         <thead>
+            <tr>
+               <th>#</th>
+               <th>File Name</th>
+               <th>Upload data</th>
+               <th></th>
+            </tr>
+         </thead>
+    {% for file in files_list %}
+			<tr>	{{ file.name_file}} {{file.upload_date}} <a href="file_view/{{ file.id }}" > Открыть</a></tr>
+          {% endfor %}
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}
+
+				

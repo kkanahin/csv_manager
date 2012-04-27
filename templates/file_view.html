@@ -13,6 +13,7 @@ border-bottom: 1px solid black;
 </style>
 {% endblock %}
 {% block content %}
+<div class="container">
 {% if messages %}
     {% for message in messages %}
     <div {% if message.tags %} class="alert alert-block alert-{{ message.tags }}"{% endif %}>
@@ -25,4 +26,5 @@ border-bottom: 1px solid black;
     {% endfor %}
 {% endif %}
 {% show_table table_value file_name %}
+</div>
 {% endblock %}
