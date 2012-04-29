@@ -35,7 +35,7 @@ height: 300px;
        <div class="well sidebar-nav">
            <label>Список категорий:</label>
           {% for category in categories_list %}
-				<a href="/?category={{ category.id }}">{{ category.name_category }}</a><br>
+				<a href="/{{ category.category_slug }}">{{ category.name_category }}</a><br>
           {% endfor %}			
        </div>
      
@@ -50,9 +50,11 @@ height: 300px;
                <th></th>
             </tr>
          </thead>
-    {% for file in files_list %}
-			<tr>	{{ file.name_file}} {{file.upload_date}} <a href="file_view/{{ file.id }}" > Открыть</a></tr>
+         <tbody>
+         {% for file in files_list %}
+	    <tr><td>{{ file.id}}</td><td>{{ file.name_file}}</td><td> {{file.upload_date}}</td><td><a href="file_view/{{ file.id }}" > Открыть</a></td></tr>
           {% endfor %}
+         </tbody>
       </table>
     </div>
   </div>

@@ -9,11 +9,15 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
-def file_list(request):
-    categories_list=Category.objects.all().values('id','name_category')
-    choiced_category=request.GET.get('category')
-    files_list=CSVData.objects.filter(category=choiced_category).\
-               values('id','name_file','upload_date')
+def file_list(request,choiced_category=''):
+    categories_list=Category.objects.all().values('category_slug','name_category')
+    if not choiced_category:
+        files_list=CSVData.objects.all().values('id','name_file','upload_date')
+    else:
+        files_list=CSVData.objects.filter(category__category_slug=choiced_category).\
+                       values('id','name_file','upload_date')
+    if not files_list:
+        raise Http404
     return render_to_response('index.html',{'user':request.user,\
                             'categories_list':categories_list,\
                             'files_list': files_list},\

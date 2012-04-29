@@ -1,7 +1,13 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 class Category(models.Model):
-    name_category=models.CharField(max_length=15)
+    name_category=models.CharField(max_length=15,unique=True)
+    category_slug=models.SlugField(editable=False)
+    
+    def save(self,**kwargs):
+        self.category_slug=slugify(self.name_category)
+        super(Category,self).save()
     
     def __unicode__(self):
         return self.name_category
@@ -39,4 +45,3 @@ class Function(models.Model):
 
     def __unicode__(self):
         return str(self.function)
-

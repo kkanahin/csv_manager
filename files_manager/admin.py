@@ -1,6 +1,9 @@
 from django.contrib import admin
 from files_manager.models import Category,CSVData,Func_var,Function
 
+class CategoryAdmin(admin.ModelAdmin):
+    list_display=('id','name_category','category_slug')
+    
 class CSVDataAdmin(admin.ModelAdmin):
     list_display=('id','name_file','upload_date','last_change','category')
 
@@ -31,7 +34,7 @@ class FunctionAdmin(admin.ModelAdmin):
     variable_data.short_description="variable data"
 
 
-admin.site.register(Category)
+admin.site.register(Category,CategoryAdmin)
 admin.site.register(CSVData,CSVDataAdmin)
 admin.site.register(Func_var,Func_varAdmin)
 admin.site.register(Function,FunctionAdmin)
