@@ -23,8 +23,14 @@ class CSVData(models.Model):
     
     def __unicode__(self):
         return str(self.name_file)
-
-
+        
+class File_head(models.Model):
+    data=models.ForeignKey(CSVData)
+    column_number=models.IntegerField()
+    column_head_str=models.CharField(max_length=15)
+    
+    def __unicode__(self):
+        return self.column_head_str
 class Func_var(models.Model):
     data=models.ForeignKey(CSVData)
     variable=models.FloatField()

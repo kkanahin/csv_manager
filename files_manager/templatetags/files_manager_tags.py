@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 register = Library()
 
 @register.inclusion_tag('table.html')
-def show_table(values_list,table_caption):
+def show_table(values_list,headers_list,table_caption):
     table_value={}
     for values_raw in values_list:
             if not values_raw['variable'] in table_value.keys():
@@ -16,7 +16,7 @@ def show_table(values_list,table_caption):
     for raw in table_value.values():
         raw.extend(['']*(len(columns_number)-len(raw)+1))
     return {'table_raws': table_value.values(),'columns_number': columns_number,\
-            'table_caption':table_caption}
+            'table_caption':table_caption,'headers_list':headers_list}
 
 
 

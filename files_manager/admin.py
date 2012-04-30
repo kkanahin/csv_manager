@@ -1,5 +1,5 @@
 from django.contrib import admin
-from files_manager.models import Category,CSVData,Func_var,Function
+from files_manager.models import Category,CSVData,File_head,Func_var,Function
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display=('id','name_category','category_slug')
@@ -17,6 +17,8 @@ class Func_varAdmin(admin.ModelAdmin):
      inlines=[FunctionInline]
      list_filter=['data']
 
+class File_headAdmin(admin.ModelAdmin):
+    list_display=('id','data','column_number','column_head_str')
 
 class FunctionAdmin(admin.ModelAdmin):
     list_display=('id','variable','function','variable_id','variable_data')
@@ -33,7 +35,7 @@ class FunctionAdmin(admin.ModelAdmin):
         return obj.variable.data
     variable_data.short_description="variable data"
 
-
+admin.site.register(File_head,File_headAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(CSVData,CSVDataAdmin)
 admin.site.register(Func_var,Func_varAdmin)

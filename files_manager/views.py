@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from files_manager.forms import UploadFileForm
 from django.http import HttpResponseRedirect,Http404
-from files_manager.models import Func_var,Function,CSVData,Category
+from files_manager.models import Func_var,Function,CSVData,Category,File_head
 from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
@@ -82,6 +82,9 @@ def file_view(request,file_id):
         raise Http404
     query_result=Function.objects.filter(variable__data=file_id).\
         values('variable','variable__variable','function').order_by('variable')
-    template_variables={'file_name': file_name, 'table_value': query_result}
+    header_values=File_head.objects.filter(data=file_id).\
+        values_list('column_head_str',flat=True).order_by('column_number')
+    template_variables={'file_name': file_name, 'table_value': query_result,\
+                           'header_values':header_values}
     return render_to_response('file_view.html',template_variables,\
-           context_instance=RequestContext(request))     
+           context_instance=RequestContext(request))

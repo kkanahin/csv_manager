@@ -6,12 +6,8 @@
      </caption>
      <thead >
         <tr>
-       {% for number_head_column in columns_number %}
-           {% if forloop.first %} 
-              <th>X</th><th>F{{ head_column }}(X)</th>
-           {% else %}
-              <th>F{{ number_head_column }}(X)</th>
-           {% endif %}
+       {% for head_column in headers_list %}
+              <th>{{ head_column }}</th>
        {% endfor %}
         <tr>
      </thead>
