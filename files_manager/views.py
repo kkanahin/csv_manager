@@ -8,6 +8,7 @@ from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger 
 
 def file_list(request,choiced_category=''):
     categories_list=Category.objects.all().values('category_slug','name_category')
@@ -16,11 +17,27 @@ def file_list(request,choiced_category=''):
     else:
         files_list=CSVData.objects.filter(category__category_slug=choiced_category).\
                        values('id','name_file','upload_date')
-    if not files_list:
-        raise Http404
+    paginator=Paginator(files_list,10)
+    page=request.GET.get('page')
+    try:
+        files_output_list=paginator.page(page)
+    except PageNotAnInteger:
+        page=1
+        files_output_list=paginator.page(page)
+    except EmptyPage:
+        files_output_list=paginator.page(paginator.num_pages)
+    if paginator.num_pages<=5:
+        page_range=range(1,paginator.num_pages+1)
+    elif page>=paginator.num_pages-5:
+        page_range=range(paginator.num_page-5,paginator.num_page)
+    elif page<=5:
+        page_range=range(1,5)
+    else:
+        page_range=range(page-2,page+2)
     return render_to_response('index.html',{'user':request.user,\
                             'categories_list':categories_list,\
-                            'files_list': files_list},\
+                            'files_output_list': files_output_list,\
+                            'page_range': page_range},\
                             context_instance=RequestContext(request)
                                              )
 

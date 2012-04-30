@@ -6,19 +6,19 @@
 }
 .sidebar-nav{
     margin-top: 10px;
-    height: 400px;
+    height: 350px;
     overflow: auto;
 }
 .file-content-bar{
     margin-top: 10px;
-    height: 400px;
+    height: 350px;
 }
 .hero-unit{
 height: 300px;
 }
+.pagination{
 
-
-
+}
 </style>
 {% endblock %}
 {% block extrascript %}
@@ -51,12 +51,43 @@ height: 300px;
             </tr>
          </thead>
          <tbody>
-         {% for file in files_list %}
+         {% for file in files_output_list %}
 	    <tr><td>{{ file.id}}</td><td>{{ file.name_file}}</td><td> {{file.upload_date}}</td><td><a href="file_view/{{ file.id }}" > Открыть</a></td></tr>
           {% endfor %}
          </tbody>
-      </table>
+      </table>      
     </div>
+    <div class="span12">
+    <div class="pagination pagination-right">
+		    <ul>
+		       {% if files_output_list.has_previous %}
+			    <li>
+				    <a href="?page={{files_output_list.previous_page_number }}">Prev</a>
+			    </li>
+			    <li>
+			       <a href="?page=1">first page</a>
+			    </li>
+			    {% endif %}
+			    {% for page in page_range %}
+			    {% if files_output_list.number == page %}
+			    <li class="active">
+			    {% else %}
+			    <li>
+			    {% endif %}
+				    <a href="?page={{ page }}">{{ page }}</a>
+			    </li>
+			    {% endfor %}
+			    {% if files_output_list.has_next %}
+			    <li>
+			       <a href="?page={{files_output_list.paginator.num_pages}}" >last page</a>
+			    </li>
+			    <li>
+				    <a href="?page={{files_output_list.next_page_number }}">Next</a>
+			    </li>
+			     {% endif %}
+		    </ul>
+	    </div>
+    </div>    
   </div>
 </div>
 {% endblock %}
