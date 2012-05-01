@@ -22,22 +22,15 @@ def file_list(request,choiced_category=''):
     try:
         files_output_list=paginator.page(page)
     except PageNotAnInteger:
-        page=1
-        files_output_list=paginator.page(page)
+        files_output_list=paginator.page(1)
     except EmptyPage:
         files_output_list=paginator.page(paginator.num_pages)
-    if paginator.num_pages<=5:
-        page_range=range(1,paginator.num_pages+1)
-    elif page>=paginator.num_pages-5:
-        page_range=range(paginator.num_page-5,paginator.num_page)
-    elif page<=5:
-        page_range=range(1,5)
-    else:
-        page_range=range(page-2,page+2)
+    files_indexes=range(files_output_list.start_index(),\
+                      files_output_list.end_index())
     return render_to_response('index.html',{'user':request.user,\
                             'categories_list':categories_list,\
                             'files_output_list': files_output_list,\
-                            'page_range': page_range},\
+                            'files_indexes':files_indexes},\
                             context_instance=RequestContext(request)
                                              )
 

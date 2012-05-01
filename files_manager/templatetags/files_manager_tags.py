@@ -18,8 +18,19 @@ def show_table(values_list,headers_list,table_caption):
     return {'table_raws': table_value.values(),'columns_number': columns_number,\
             'table_caption':table_caption,'headers_list':headers_list}
 
-
-
+@register.inclusion_tag('pagination.html')
+def files_paginator(pagination_obj):
+    num_pages=pagination_obj.paginator.num_pages
+    page=pagination_obj.number
+    if num_pages<=10:
+        page_range=range(1,num_pages+1)
+    elif page>=num_pages-5:
+        page_range=range(num_pages-4,num_pages+1)
+    elif page<=5:
+        page_range=range(1,6)
+    else:
+        page_range=range(page-2,page+2)
+    return {'pagination_obj':pagination_obj,'page_range':page_range}
 #class TableOutputNode(Node):
 #    def __init__(self,values_list,attrs,caption):
 #        self.values_list=Variable(values_list)
