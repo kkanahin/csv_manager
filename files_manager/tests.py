@@ -4,13 +4,14 @@ when you run "manage.py test".
 
 Replace this with more appropriate tests for your application.
 """
-
+from files_manager.models import CSVData,Function,Func_var
 from django.test import TestCase,Client
 from django.contrib.auth.models import User
 from files_manager import forms
 from django.core.files import File
 from django.core.urlresolvers import reverse
 import os
+from django.conf import settings
 
 class Files_managerTest(TestCase):
     fixtures=['test_data.json']
@@ -41,9 +42,16 @@ class Files_managerTest(TestCase):
         response=c.post('/upload/',{'category':'1','upload_file':upload_file})
         self.failIf(response.context['form'].is_valid())
         self.assertFormError(response,'form',field='upload_file',\
-                             errors=u'This file is not csv!')
+                             errors=u'The Head of this file is not right!')
         upload_file.close()
         upload_file_path=(os.path.join(self.test_files_path,'2.csv_test'))
         upload_file=open(upload_file_path,'rb')
         response=c.post('/upload/',{'category':'1','upload_file':upload_file})
         self.assertRedirects(response,reverse('file_view',args=[2]))
+        upload_file.close()
+        num_variables=Func_var.objects.filter(data=2).count()
+        self.assertEqual(num_variables,2)
+        num_functions=Function.objects.filter(variable__data=2).count()
+        self.assertEqual(num_functions,3)
+        remove_file=CSVData.objects.get(id=2).name_file.url
+        os.remove(os.path.join(settings.MEDIA_ROOT,remove_file))
