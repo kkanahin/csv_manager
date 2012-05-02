@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'files_manager',
     'registration',
     'files_manager.templatetags',
+#    'chartit',
 )
 
 # A sample logging configuration. The only tangible logging

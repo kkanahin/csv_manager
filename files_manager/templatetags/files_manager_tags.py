@@ -1,5 +1,6 @@
 from django.template import Library,TemplateSyntaxError,Node,Variable
 from django.utils.safestring import mark_safe
+#from chartit import DataPool,Chart
 
 register = Library()
 
@@ -31,6 +32,36 @@ def files_paginator(pagination_obj):
     else:
         page_range=range(page-2,page+2)
     return {'pagination_obj':pagination_obj,'page_range':page_range}
+
+#@register.inclusion_tag('chart.html')
+#def table_chart(values_list):
+#    chart_data= \
+#        DataPool(
+#            series=
+#             [{'options': {
+#                'source': values_list},
+#                'terms': [
+#                'variable',
+#                'function']}
+#               ])
+#    cht = Chart(
+#             datasource = chart_data,
+#             series_options =
+#               [{'options':{
+#                     'type': 'line',
+#                     'stacking': False},
+#                     'terms':{
+#                       'variable': [
+#                         'function']
+#                         }}],
+#            chart_options =
+#               {'title': {
+#                    'text': 'data file'},
+#                'xAxis': {
+#                     'title': {
+#                         'text': 'X'}}})
+#    return {'table_chart':cht}
+#
 #class TableOutputNode(Node):
 #    def __init__(self,values_list,attrs,caption):
 #        self.values_list=Variable(values_list)

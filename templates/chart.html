@@ -1,0 +1,6 @@
+{% block extrahead %}
+{% load chartit %}
+{{ table_chart|load_charts:"container" }}
+{% endblock %}
+
+<div id="container"></div>
