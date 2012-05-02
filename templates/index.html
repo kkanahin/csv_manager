@@ -36,7 +36,7 @@ height: 300px;
        <div class="well sidebar-nav">
            <label>Список категорий:</label>
           {% for category in categories_list %}
-				<a href="/{{ category.category_slug }}">{{ category.name_category }}</a><br>
+				<a href="/category/{{ category.category_slug }}">{{ category.name_category }}</a><br>
           {% endfor %}			
        </div>
      
