@@ -1,5 +1,4 @@
 from files_manager.models import CSVData,Category,File_head
-from django.db import IntegrityError
 import re
 
 def handle_uploaded_file(csv_file,category):
