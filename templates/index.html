@@ -22,13 +22,6 @@ height: 300px;
 }
 </style>
 {% endblock %}
-{% block extrascript %}
-  <script>
-  function reset_btn_category(){
-  $('.category').button('reset');
-  }
-  </script>
-{% endblock %}
 {% block content %}
 <div class="container-fluid block_height">
   <div class="row-fluid">
@@ -64,7 +57,9 @@ height: 300px;
 	          {{file.upload_date}}
 	       </td>
 	       <td>
-	          <a href="file_view/{{ file.id }}" > Открыть</a>
+	          {% if user.is_authenticated %}
+	          <a href="/file_view/{{ file.id }}" > Открыть</a>
+	          {% endif %}
 	       </td>
 	     </tr>
           {% endfor %}

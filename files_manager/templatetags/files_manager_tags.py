@@ -15,9 +15,13 @@ def show_table(values_list,headers_list,table_caption):
             table_value[values_raw['variable']].append(values_raw['function'])
     columns_number = range(1,max([len(val) for val in table_value.values()]))
     for raw in table_value.values():
-        raw.extend(['']*(len(columns_number)-len(raw)+1))
+        raw.extend([0]*(len(columns_number)-len(raw)+1))
+    data_chart=[[values for values in value_list] \
+                for value_list in map(None,*table_value.values())]             # [1:]-cut variable_list
+    data_chart=map(None,headers_list[:],data_chart[:])
+    print data_chart
     return {'table_raws': table_value.values(),'columns_number': columns_number,\
-            'table_caption':table_caption,'headers_list':headers_list}
+            'table_caption':table_caption,'headers_list':headers_list,'data_chart':data_chart}
 
 @register.inclusion_tag('pagination.html')
 def files_paginator(pagination_obj):

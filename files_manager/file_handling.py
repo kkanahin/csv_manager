@@ -10,7 +10,7 @@ def handle_uploaded_file(csv_file,category):
     first_line_trig=0
     for line in csv_file:
         if first_line_trig==0:
-            head_splited=re.split(',|;',line)
+            head_splited=re.split(',|;',line.strip('\n\r'))
             for num_column,head in enumerate(head_splited):
                 upload_file.file_head_set.create(column_number=num_column,\
                     column_head_str=head)
