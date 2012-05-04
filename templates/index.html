@@ -28,6 +28,7 @@ height: 300px;
     <div class="span2">
        <div class="well sidebar-nav">
            <label>Список категорий:</label>
+               <a href="/">Все файлы</a><br>
           {% for category in categories_list %}
 				<a href="/category/{{ category.category_slug }}">{{ category.name_category }}</a><br>
           {% endfor %}			

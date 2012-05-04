@@ -21,7 +21,6 @@ def show_table(values_list,headers_list,table_caption):
     else:
         data_chart=[[value] for value in table_value.values()[0]]
     data_chart=map(None,headers_list[:],data_chart[:])
-    print data_chart
     return {'table_raws': table_value.values(),'columns_number': columns_number,\
             'table_caption':table_caption,'headers_list':headers_list,'data_chart':data_chart}
 

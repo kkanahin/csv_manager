@@ -49,7 +49,7 @@
                                    <a href="{% url auth_logout %}" >Выйти</a>
                                </li>
                             </ul>
-                          </div
+                          </div>
                           {% else %}
                           <a href="{% url auth_login %}">Вход</a>
                           {% endif %}
@@ -57,11 +57,10 @@
                        </ul>
                     </div>
                 </div>
-            <div>
+            </div>
          {% endblock %}
             {% block content %}
             {% endblock %}
-</div>
 {% block footer %}<footer>© Kanakhin 2012</footer>{% endblock %}
 </div>
 </body>
