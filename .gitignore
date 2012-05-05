@@ -3,4 +3,4 @@
 *.html~
 *.csv
 *.*~
-media/
+media/*.*

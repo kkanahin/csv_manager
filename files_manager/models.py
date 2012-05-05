@@ -20,6 +20,7 @@ class CSVData(models.Model):
     upload_date=models.DateTimeField(auto_now_add=True)
     last_change=models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category)
+    upload_status=models.CharField(max_length=10,editable=False)
     
     def __unicode__(self):
         return str(self.name_file)
@@ -42,12 +43,6 @@ class Func_var(models.Model):
 class Function(models.Model):
     variable=models.ForeignKey(Func_var)
     function=models.FloatField()
-    
-#    def variable_id(self):
-#        return self.variable.id
-    
-#    def variable_data(self):
-#        return self.variable.data
 
     def __unicode__(self):
         return str(self.function)

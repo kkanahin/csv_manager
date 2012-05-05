@@ -132,7 +132,7 @@ INSTALLED_APPS = (
     'files_manager',
     'registration',
     'files_manager.templatetags',
-#    'chartit',
+    'djcelery',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -175,6 +175,16 @@ DEFAULT_FROM_EMAIL='admin@csv-manager.com'
 LOGIN_REDIRECT_URL = '/'
 # End Django-register configuration block
 INTERNAL_IPS = ('127.0.0.1',)
+# Options for celery-redis
+BROKER_BACKEND="redis"
+BROKER_HOST="localhost"
+BROKER_PORT= 6379
+BROKER_VHOST="0"
+
+import djcelery
+
+djcelery.setup_loader()
+#end celery-reddis options
 try:
     from local_settings import *
 except ImportError:
