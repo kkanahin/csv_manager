@@ -50,14 +50,23 @@ def file_upload(request):
 @login_required
 def file_view(request,file_id):
     try:
-        file_name=CSVData.objects.values('name_file').get(id=file_id)['name_file']
+        requirement_file=CSVData.objects.values('name_file','upload_status').\
+                         get(id=file_id)
     except CSVData.DoesNotExist:
         raise Http404
-    query_result=Function.objects.filter(variable__data=file_id).\
-        values('variable','variable__variable','function').order_by('variable')
-    header_values=File_head.objects.filter(data=file_id).\
-        values_list('column_head_str',flat=True).order_by('column_number')
-    template_variables={'file_name': file_name, 'table_value': query_result,\
-                           'header_values':header_values}
+    file_name=requirement_file['name_file']
+    
+    if requirement_file['upload_status']=='uploaded':
+        query_result=Function.objects.filter(variable__data=file_id).\
+            values('variable','variable__variable','function').order_by('variable')
+        header_values=File_head.objects.filter(data=file_id).\
+            values_list('column_head_str',flat=True).order_by('column_number')
+        template_variables={'file_name': file_name, 'table_value': query_result,\
+                            'header_values':header_values}
+    else:
+        messages.info(request,'File is parcing now')
+        template_variables={'file_name':file_name}
+    template_variables['file_status']=requirement_file['upload_status']
+    
     return render_to_response('file_view.html',template_variables,\
            context_instance=RequestContext(request))

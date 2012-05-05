@@ -20,11 +20,20 @@ border-bottom: 1px solid black;
     <a class="close" data-dismiss="alert">×</a>
     {% if message.tags == "success" %}
      <h4 class="alert-heading">Well done!</h4>
-    {% endif %}
         {{ message }} under the name {{file_name }}
+    {% endif %}
+    {% if message.tags == "info" %}
+     <h4 class="alert-heading">Attention!</h4>
+        {{ message }} <br>
+        File:{{file_name }} will be available later!
+    {% endif %}
     </div>
     {% endfor %}
 {% endif %}
+{% if file_status == 'uploaded' %}
 {% show_table table_value header_values file_name %}
+{% else %}
+<a href='/'>Перейти к списку файлов</a>
+{% endif %}
 </div>
 {% endblock %}
