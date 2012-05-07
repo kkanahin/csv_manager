@@ -2,4 +2,7 @@ language: python
 python:
     - 2.7
 install: pip install -r requirements.txt
+script: python manage.py celeryd -E -B --loglevel=INFO
 script: python manage.py test
+before_script: 
+  - psql -c 'create database csv_manager_test;' -U postgres

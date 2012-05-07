@@ -20,7 +20,7 @@ class CSVData(models.Model):
     upload_date=models.DateTimeField(auto_now_add=True)
     last_change=models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category)
-    upload_status=models.CharField(max_length=10,editable=False)
+    upload_status=models.CharField(max_length=13,editable=False)
     
     def __unicode__(self):
         return str(self.name_file)
