@@ -37,8 +37,9 @@ def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            added_file=handle_uploaded_file(request.FILES['name_file'],\
-                request.POST['category'])
+            #added_file=handle_uploaded_file(request.FILES['name_file'],\
+            #    request.POST['category'])
+            form.save()
             messages.success(request,'File was uploaded succesfully ')
             return HttpResponseRedirect(reverse('file_view',args=[added_file]))
     else:

@@ -15,7 +15,7 @@ class Category(models.Model):
 def make_upload_file(instance,filename):
     return u"%s" % (filename)
 
-UPLOAD_STATUS_CHOICES=((u'is_uploading',u'is_uploading'),
+UPLOAD_STATUS_CHOICES=((u'is_uploading',u'is uploading'),
                        (u'uploaded',u'uploaded')
                       )
 
