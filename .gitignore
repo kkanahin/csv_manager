@@ -4,4 +4,4 @@
 *.csv
 *.*~
 media/*.*
-celerybeat-shedule
+celerybeat-schedule

@@ -3,6 +3,7 @@ import re
 
 @task()
 def upload_data(up_file_id, file_ref):
+    print file_ref
     csv_data=open(file_ref,'rb')
     first_line_trig=0
     for line in csv_data:

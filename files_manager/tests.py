@@ -19,7 +19,7 @@ class Files_managerTest(TestCase):
 #    fixtures=['test_data.json']
     path=os.path.realpath(os.path.dirname('__file__'))
     test_files_path=os.path.join(path,'files_manager','test_files')
-
+    
     def setUp(self):
         User.objects.create_user('test_user','test_user@example.com','pass')
         Category.objects.create(name_category='category 1')
@@ -28,7 +28,7 @@ class Files_managerTest(TestCase):
         c.login(username='test_user',password='pass')
         upload_file_path=(os.path.join(self.test_files_path,'2.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
+        response=c.post('/upload/',{'category':'1','name_file':upload_file})
         c.logout()
         remove_file=CSVData.objects.get(id=1).name_file.url
         os.remove(os.path.join(settings.MEDIA_ROOT,remove_file))
@@ -51,21 +51,21 @@ class Files_managerTest(TestCase):
         c.login(username='test_user',password='pass')
         upload_file_path=(os.path.join(self.test_files_path,'1.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
+        response=c.post('/upload/',{'category':'1','name_file':upload_file})
         self.failIf(response.context['form'].is_valid())
-        self.assertFormError(response,'form',field='upload_file',\
+        self.assertFormError(response,'form',field='name_file',\
                              errors=u'The Head of this file is not right!')
 
         upload_file_path=(os.path.join(self.test_files_path,'3.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
-        self.assertFormError(response,'form',field='upload_file',\
+        response=c.post('/upload/',{'category':'1','name_file':upload_file})
+        self.assertFormError(response,'form',field='name_file',\
                              errors=u'This file is not csv!')
         upload_file.close()
 
         upload_file_path=(os.path.join(self.test_files_path,'2.csv_test'))
         upload_file=open(upload_file_path,'rb')
-        response=c.post('/upload/',{'category':'1','upload_file':upload_file})
+        response=c.post('/upload/',{'category':'1','name_file':upload_file})
         self.assertRedirects(response,reverse('file_view',args=[2]))
         upload_file.close()
         num_variables=Func_var.objects.filter(data=2).count()

@@ -15,12 +15,17 @@ class Category(models.Model):
 def make_upload_file(instance,filename):
     return u"%s" % (filename)
 
+UPLOAD_STATUS_CHOICES=((u'is_uploading',u'is_uploading'),
+                       (u'uploaded',u'uploaded')
+                      )
+
 class CSVData(models.Model):
-    name_file=models.FileField(upload_to=make_upload_file)
+    category=models.ForeignKey(Category,help_text='Select category')
+    name_file=models.FileField(upload_to=make_upload_file,verbose_name='upload file')
     upload_date=models.DateTimeField(auto_now_add=True)
     last_change=models.DateTimeField(auto_now=True)
-    category=models.ForeignKey(Category)
-    upload_status=models.CharField(max_length=13,editable=False)
+    upload_status=models.CharField(max_length=13,editable=False,\
+                                   choices=UPLOAD_STATUS_CHOICES)
     
     def __unicode__(self):
         return str(self.name_file)

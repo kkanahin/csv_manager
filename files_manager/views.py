@@ -26,8 +26,7 @@ def file_list(request,choiced_category=''):
         files_output_list=paginator.page(paginator.num_pages)
     files_indexes=range(files_output_list.start_index(),\
                       files_output_list.end_index())
-    return render_to_response('index.html',{'user':request.user,\
-                            'categories_list':categories_list,\
+    return render_to_response('index.html',{'categories_list':categories_list,\
                             'files_output_list': files_output_list,\
                             'files_indexes':files_indexes},\
                             context_instance=RequestContext(request)
@@ -38,7 +37,7 @@ def file_upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
-            added_file=handle_uploaded_file(request.FILES['upload_file'],\
+            added_file=handle_uploaded_file(request.FILES['name_file'],\
                 request.POST['category'])
             messages.success(request,'File was uploaded succesfully ')
             return HttpResponseRedirect(reverse('file_view',args=[added_file]))
