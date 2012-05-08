@@ -1,4 +1,5 @@
-from celery.decorators import task
+from celery.task import task,periodic_task
+from celery.schedules import crontab
 from files_manager.models import CSVData
 import re
 
@@ -7,6 +8,8 @@ def upload_data(up_file_id):
     check = re.compile('((\d+(\.)?(\d+)?)?(,|;))+\d+\.?(\d+)?(\n|\r\n)?')
     check_head=re.compile('([\w_-]+(,|;))+[\w_-]+(\n|\r\n)?')
     parcing_file=CSVData.objects.get(id=up_file_id)
+    print up_file_id
+    print parcing_file.name_file.path
     csv_data=open(parcing_file.name_file.path,'rb')
     first_line_trig=0
     for line in csv_data:
@@ -37,3 +40,10 @@ def upload_data(up_file_id):
     parcing_file.save()
     csv_data.close()
     return 'file is uploaded successful'
+
+@periodic_task(ignore_result=True, run_every=crontab(hour=1, minute=0))
+def clean_fail_files():
+    time_delta=datetime.datetime.now()-datetime.timedelta(days=1)
+    CSVData.objects.filter(upload_date__lt=time_delta).\
+        exclude(upload_status='uploaded').delete()
+    return 'File remove succesful'

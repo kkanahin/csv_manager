@@ -39,6 +39,8 @@ def file_upload(request):
         form = UploadFileForm(request.POST,request.FILES)
         if form.is_valid():
             save_file=form.save()
+            print save_file.id
+            print 'user_id'
             upload_data.delay(save_file.id)
             messages.info(request,'File is uploading by name %s' % save_file.name_file)
             return HttpResponseRedirect(reverse('file_view',args=[save_file.id]))
