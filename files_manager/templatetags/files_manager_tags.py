@@ -7,11 +7,13 @@ register = Library()
 def show_table(values_list,headers_list,table_caption):
     table_value={}
     for values_raw in values_list:
+            print values_raw
             if not values_raw['variable'] in table_value.keys():
                 table_value[values_raw['variable']]=[]
                 table_value[values_raw['variable']].\
                     append(values_raw['variable__variable'])
             table_value[values_raw['variable']].append(values_raw['function'])
+    print table_value
     columns_number = range(1,max([len(val) for val in table_value.values()]))
     for raw in table_value.values():
         raw.extend([0]*(len(columns_number)-len(raw)+1))

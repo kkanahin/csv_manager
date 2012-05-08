@@ -9,7 +9,9 @@ color: black;
 th {
 border-bottom: 1px solid black;
 }
-
+#bad_status{
+color: red;
+}
 </style>
 {% endblock %}
 {% block content %}
@@ -25,15 +27,18 @@ border-bottom: 1px solid black;
     {% if message.tags == "info" %}
      <h4 class="alert-heading">Attention!</h4>
         {{ message }} <br>
-        File:{{file_name }} will be available later!
     {% endif %}
     </div>
     {% endfor %}
 {% endif %}
-{% if file_status == 'uploaded' %}
+{% if file_status == 'File is uploaded' %}
 {% show_table table_value header_values file_name %}
 {% else %}
+<div class='hero-unit'>
+<h1>{{ file_name }}</h1>
+<p><strong id="bad_status">{{ file_status }}</strong></p>
 <a href='/'>Перейти к списку файлов</a>
+</div>
 {% endif %}
 </div>
 {% endblock %}

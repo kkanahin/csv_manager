@@ -11,17 +11,17 @@ class UploadFileForm(forms.ModelForm):
         model = CSVData
         fields = ('category','name_file')
     
-    def clean_upload_file(self):
-        data = self.cleaned_data['upload_file']
-        check = re.compile('((\d+(\.)?(\d+)?)?(,|;))+\d+\.?(\d+)?(\n|\r\n)?')
-        check_head=re.compile('([\w_-]+(,|;))+[\w_-]+(\n|\r\n)?')
-        first_line_trig=0
-        for line in data:
-            if first_line_trig==0:
-                if not check_head.match(line):
-                    raise forms.ValidationError("The Head of this file is not right!")
-                first_line_trig=1
-            else:
-                if not check.match(line):
-                    raise forms.ValidationError("This file is not csv!")
-        return data
+#    def clean_upload_file(self):
+#        data = self.cleaned_data['upload_file']
+#        check = re.compile('((\d+(\.)?(\d+)?)?(,|;))+\d+\.?(\d+)?(\n|\r\n)?')
+#        check_head=re.compile('([\w_-]+(,|;))+[\w_-]+(\n|\r\n)?')
+#        first_line_trig=0
+#        for line in data:
+#            if first_line_trig==0:
+#                if not check_head.match(line):
+#                    raise forms.ValidationError("The Head of this file is not right!")
+#                first_line_trig=1
+#            else:
+#                if not check.match(line):
+#                    raise forms.ValidationError("This file is not csv!")
+#        return data
