@@ -58,6 +58,9 @@ height: 300px;
 	          {{file.upload_date}}
 	       </td>
 	       <td>
+	          {{file.upload_status}}
+	       </td>
+	       <td>
 	          {% if user.is_authenticated %}
 	          <a href="/file_view/{{ file.id }}" > Открыть</a>
 	          {% endif %}

@@ -1,4 +1,5 @@
 from celery.task import task,periodic_task
+from celery.task.control import revoke
 from celery.schedules import crontab
 from files_manager.models import CSVData
 import re
@@ -17,7 +18,8 @@ def upload_data(up_file_id):
             if not check_head.match(line):
                 parcing_file.upload_status='header_fail'
                 parcing_file.save()
-                return 'Bad Header'
+                logger=upload_data.get_logger()
+                logger.info("File has bad data header")
             else:
                 head_splited=re.split(',|;',line.strip('\n\r'))
                 for num_column,head in enumerate(head_splited):
@@ -28,7 +30,8 @@ def upload_data(up_file_id):
             if not check.match(line):
                 parcing_file.upload_status='content_fail'
                 parcing_file.save()
-                return 'bad content'
+                logger=upload_data.get_logger()
+                logger.info("File has bad content")
             else:
                 value_splited=re.split(',|;',line.replace(',,',',0,'))
                 func_variable_value=parcing_file.func_var_set.create(

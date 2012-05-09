@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from files_manager.forms import UploadFileForm
 from django.http import HttpResponseRedirect,Http404
 from files_manager.models import Func_var,Function,CSVData,Category,File_head
-from files_manager.file_handling import handle_uploaded_file
+#from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -13,10 +13,10 @@ from files_manager.tasks import upload_data
 def file_list(request,choiced_category=''):
     categories_list=Category.objects.all().values('category_slug','name_category')
     if not choiced_category:
-        files_list=CSVData.objects.all().values('id','name_file','upload_date')
+        files_list=CSVData.objects.all().values('id','name_file','upload_date','upload_status')
     else:
         files_list=CSVData.objects.filter(category__category_slug=choiced_category).\
-                       values('id','name_file','upload_date')
+                       values('id','name_file','upload_date','upload_status')
     paginator=Paginator(files_list,10)
     page=request.GET.get('page')
     try:
