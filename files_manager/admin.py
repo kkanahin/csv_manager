@@ -5,7 +5,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display=('id','name_category','category_slug')
     
 class CSVDataAdmin(admin.ModelAdmin):
-    list_display=('id','name_file','upload_date','last_change','category','upload_status')
+    list_display=('id','name_file','upload_date','last_change','category','upload_status','owner')
 
 class FunctionInline(admin.StackedInline):
     model=Function

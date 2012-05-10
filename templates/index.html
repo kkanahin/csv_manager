@@ -42,6 +42,7 @@ height: 300px;
                <th>#</th>
                <th>File Name</th>
                <th>Upload data</th>
+               <th>Status</th>
                <th></th>
             </tr>
          </thead>
@@ -58,7 +59,16 @@ height: 300px;
 	          {{file.upload_date}}
 	       </td>
 	       <td>
-	          {{file.upload_status}}
+	          {% if file.upload_status == 'uploaded' %}
+	              <span class="label label-success">
+	          {% else %}{% if file.upload_status == 'is_uploading' %}
+	              <span class="label label-warning">
+	                    {% else %}
+	                    <span class="label label-important">
+	                    {% endif %}
+	          {% endif %}
+	          {{file.get_upload_status_display}}
+	          </span>
 	       </td>
 	       <td>
 	          {% if user.is_authenticated %}

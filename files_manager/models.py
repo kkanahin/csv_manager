@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name_category=models.CharField(max_length=15,unique=True)
@@ -28,7 +29,7 @@ class CSVData(models.Model):
     last_change=models.DateTimeField(auto_now=True)
     upload_status=models.CharField(max_length=13,choices=UPLOAD_STATUS_CHOICES,\
                                     default='is_uploading')
-    
+    owner=models.ForeignKey(User)
     def __unicode__(self):
         return str(self.name_file)
         

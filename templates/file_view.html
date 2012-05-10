@@ -35,8 +35,8 @@ color: red;
 {% show_table table_value header_values file_name %}
 {% else %}
 <div class='hero-unit'>
-<h1>{{ file_name }}</h1>
-<p><strong id="bad_status">{{ file_status }}</strong></p>
+<strong>File under the name "{{ file_name }}" is not available for viewing and has status: </strong>
+<p><strong id="bad_status">{{ file_status }}!</strong></p>
 <a href='/'>Перейти к списку файлов</a>
 </div>
 {% endif %}

@@ -2,6 +2,7 @@ from celery.task import task,periodic_task
 from celery.task.control import revoke
 from celery.schedules import crontab
 from files_manager.models import CSVData
+from datetime import datetime,timedelta
 import re
 
 @task()
@@ -20,6 +21,7 @@ def upload_data(up_file_id):
                 parcing_file.save()
                 logger=upload_data.get_logger()
                 logger.info("File has bad data header")
+                return None
             else:
                 head_splited=re.split(',|;',line.strip('\n\r'))
                 for num_column,head in enumerate(head_splited):
@@ -32,6 +34,7 @@ def upload_data(up_file_id):
                 parcing_file.save()
                 logger=upload_data.get_logger()
                 logger.info("File has bad content")
+                return None
             else:
                 value_splited=re.split(',|;',line.replace(',,',',0,'))
                 func_variable_value=parcing_file.func_var_set.create(

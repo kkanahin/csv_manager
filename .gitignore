@@ -3,5 +3,5 @@
 *.html~
 *.csv
 *.*~
-media/*.*
+media/*
 celerybeat-schedule

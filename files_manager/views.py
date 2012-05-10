@@ -13,10 +13,11 @@ from files_manager.tasks import upload_data
 def file_list(request,choiced_category=''):
     categories_list=Category.objects.all().values('category_slug','name_category')
     if not choiced_category:
-        files_list=CSVData.objects.all().values('id','name_file','upload_date','upload_status')
+        files_list=CSVData.objects.all()
+#        .values('id','name_file','upload_date','upload_status')
     else:
-        files_list=CSVData.objects.filter(category__category_slug=choiced_category).\
-                       values('id','name_file','upload_date','upload_status')
+        files_list=CSVData.objects.filter(category__category_slug=choiced_category)
+#                       values('id','name_file','upload_date','upload_status')
     paginator=Paginator(files_list,10)
     page=request.GET.get('page')
     try:
@@ -36,7 +37,8 @@ def file_list(request,choiced_category=''):
 @login_required
 def file_upload(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST,request.FILES)
+        owner=CSVData(owner=request.user)
+        form = UploadFileForm(request.POST,request.FILES,instance=owner)
         if form.is_valid():
             save_file=form.save()
             print save_file.id
