@@ -47,9 +47,18 @@ def upload_data(up_file_id):
     csv_data.close()
     return 'file is uploaded successful'
 
-@periodic_task(ignore_result=True, run_every=crontab(hour=1, minute=0))
+#@periodic_task(ignore_result=True, run_every=crontab(hour=1, minute=0))
+#@task()
 def clean_fail_files():
-    time_delta=datetime.datetime.now()-datetime.timedelta(days=1)
-    CSVData.objects.filter(upload_date__lt=time_delta).\
-        exclude(upload_status='uploaded').delete()
-    return 'File remove succesful'
+    time_delta=datetime.now()-timedelta(minutes=1)
+    files_delete=CSVData.objects.filter(upload_date__lt=time_delta).\
+        exclude(upload_status='uploaded').values('owner__email','name_file')
+    print files_delete
+    email_dict={}
+    for each_file in files_delete:
+        if not each_file['owner__email'] in email_dict.keys():
+            email_dict[each_file['owner__email']]=[]
+        email_dict[each_file['owner__email']].append(each_file['name_file'])
+#    CSVData.objects.filter(upload_date__lt=time_delta).\
+#        exclude(upload_status='uploaded').delete()
+    return email_dict
