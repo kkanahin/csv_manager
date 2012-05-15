@@ -69,4 +69,3 @@ def clean_fail_files():
         send_mail('Remove your files',message_text,'admin@csv_manager.com',[recipient])
     logger=clean_fail_files.get_logger()
     logger.info('All bad files have been removed!')
-    return None
