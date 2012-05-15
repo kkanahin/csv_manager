@@ -49,7 +49,7 @@ def upload_data(up_file_id):
 
 @periodic_task(ignore_result=True, run_every=crontab(hour=1, minute=0))
 def clean_fail_files():
-    time_delta=datetime.datetime.now()-datetime.timedelta(days=1)
+    time_delta=datetime.now()-timedelta(days=1)
     CSVData.objects.filter(upload_date__lt=time_delta).\
         exclude(upload_status='uploaded').delete()
     return 'File remove succesful'
