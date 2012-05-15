@@ -4,6 +4,8 @@ from celery.schedules import crontab
 from files_manager.models import CSVData
 from datetime import datetime,timedelta
 import re
+import os
+from django.core.mail import send_mail
 
 @task()
 def upload_data(up_file_id):
@@ -50,6 +52,21 @@ def upload_data(up_file_id):
 @periodic_task(ignore_result=True, run_every=crontab(hour=1, minute=0))
 def clean_fail_files():
     time_delta=datetime.now()-timedelta(days=1)
-    CSVData.objects.filter(upload_date__lt=time_delta).\
-        exclude(upload_status='uploaded').delete()
-    return 'File remove succesful'
+    files_delete=CSVData.objects.filter(upload_date__lt=time_delta).\
+        exclude(upload_status='uploaded').select_related('owner')
+    print files_delete
+    email_dict={}
+    for each_file in files_delete:
+        if not each_file.owner.email in email_dict.keys():
+            email_dict[each_file.owner.email]=[]
+        email_dict[each_file.owner.email].append(each_file.name_file.url)
+        os.remove(each_file.name_file.path)
+    files_delete.delete()
+    for recipient,files_list in email_dict.items():
+        print recipient
+        files_string=','.join(files_list)
+        message_text="Your files %s have been removed from csv_manager." % files_string
+        send_mail('Remove your files',message_text,'admin@csv_manager.com',[recipient])
+    logger=clean_fail_files.get_logger()
+    logger.info('All bad files have been removed!')
+    return None
