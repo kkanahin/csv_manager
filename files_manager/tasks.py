@@ -12,8 +12,6 @@ def upload_data(up_file_id):
     check = re.compile('((\d+(\.)?(\d+)?)?(,|;))+\d+\.?(\d+)?(\n|\r\n)?')
     check_head=re.compile('([\w_-]+(,|;))+[\w_-]+(\n|\r\n)?')
     parcing_file=CSVData.objects.get(id=up_file_id)
-    print up_file_id
-    print parcing_file.name_file.path
     csv_data=open(parcing_file.name_file.path,'rb')
     first_line_trig=0
     for line in csv_data:
@@ -54,7 +52,6 @@ def clean_fail_files():
     time_delta=datetime.now()-timedelta(days=1)
     files_delete=CSVData.objects.filter(upload_date__lt=time_delta).\
         exclude(upload_status='uploaded').select_related('owner')
-    print files_delete
     email_dict={}
     for each_file in files_delete:
         if not each_file.owner.email in email_dict.keys():
@@ -63,7 +60,6 @@ def clean_fail_files():
         os.remove(each_file.name_file.path)
     files_delete.delete()
     for recipient,files_list in email_dict.items():
-        print recipient
         files_string=','.join(files_list)
         message_text="Your files %s have been removed from csv_manager." % files_string
         send_mail('Remove your files',message_text,'admin@csv_manager.com',[recipient])

@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from files_manager.forms import UploadFileForm
 from django.http import HttpResponseRedirect,Http404
 from files_manager.models import Func_var,Function,CSVData,Category,File_head
-#from files_manager.file_handling import handle_uploaded_file
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -14,10 +13,8 @@ def file_list(request,choiced_category=''):
     categories_list=Category.objects.all().values('category_slug','name_category')
     if not choiced_category:
         files_list=CSVData.objects.all()
-#        .values('id','name_file','upload_date','upload_status')
     else:
         files_list=CSVData.objects.filter(category__category_slug=choiced_category)
-#                       values('id','name_file','upload_date','upload_status')
     paginator=Paginator(files_list,10)
     page=request.GET.get('page')
     try:
@@ -41,8 +38,6 @@ def file_upload(request):
         form = UploadFileForm(request.POST,request.FILES,instance=owner)
         if form.is_valid():
             save_file=form.save()
-            print save_file.id
-            print 'user_id'
             upload_data.delay(save_file.id)
             messages.info(request,'File is uploading by name %s' % save_file.name_file)
             return HttpResponseRedirect(reverse('file_view',args=[save_file.id]))

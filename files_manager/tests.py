@@ -16,7 +16,6 @@ from django.conf import settings
 
 
 class Files_managerTest(TestCase):
-#    fixtures=['test_data.json']
     path=os.path.realpath(os.path.dirname('__file__'))
     test_files_path=os.path.join(path,'files_manager','test_files')
     
