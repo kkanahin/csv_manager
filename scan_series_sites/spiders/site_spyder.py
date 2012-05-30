@@ -15,9 +15,12 @@ class SeasonvarSpider(BaseSpider):
         day_news=x.select("//div[@class='film-list-block']")
         for each in day_news:
             item=ScanSeriesSitesItem()
-            item['month']=each.select("div[@class='film-list-block-title']/div[@class='ff1']/text()").re("\d+\.(\d+.\d+)")
-            item['day']=each.select("div[@class='film-list-block-title']/div[@class='ff1']/text()").re("(\d+)\.\d+.\d+")
-            item['number_of_series']=len(each.select("div[@class='film-list-block-content']/div[@class='film-list-item']/text()"))
+            item['month']=each.select("div[@class='film-list-block-title']/div[@class='ff1']/text()").\
+                re("\d+\.(\d+.\d+)")
+            item['day']=each.select("div[@class='film-list-block-title']/div[@class='ff1']/text()").\
+                re("(\d+)\.\d+.\d+")
+            item['number_of_series']=len(each.\
+                select("div[@class='film-list-block-content']/div[@class='film-list-item']/text()"))
             items.append(item)
+        items.reverse()
         return items
-            

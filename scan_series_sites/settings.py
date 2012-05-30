@@ -21,10 +21,12 @@ ITEM_PIPELINES=[
 def setup_django_env(path):
     import imp,os
     from django.core.management import setup_environ
+    print path
     f, filename, desc = imp.find_module('settings', [path])
     project = imp.load_module('settings', f, filename, desc)
     setup_environ(project)
 
 scrapy_project_dir=os.path.realpath(os.path.dirname('__file__'))
-django_project_dir=os.path.join(scrapy_project_dir,'..','csv_manager')
+print scrapy_project_dir
+django_project_dir=os.path.join(scrapy_project_dir,'csv_manager')
 setup_django_env(django_project_dir)
